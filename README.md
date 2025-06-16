@@ -54,11 +54,58 @@ This project aims to perform data analysis in the finance and insurance sectors.
    dvc repro
    ```
 
+## Task Workflow and Branching
+
+### Git Branching and Commit Strategy
+- Create a new branch for each major task (e.g., `task-1`, `task-2`).
+- Commit work at least three times per day with descriptive messages (e.g., `Initial EDA summary`, `Added loss ratio plots`, `Refactored data quality checks`).
+- Use Pull Requests (PRs) to merge feature branches into `main` after review.
+
+### CI/CD with GitHub Actions
+- Linting and notebook checks are run automatically on push and PRs to `main`.
+- DVC steps are included in the workflow for data versioning.
+
+## DVC Usage
+
+1. **Install DVC** (if not already):
+   ```cmd
+   pip install dvc
+   ```
+2. **Initialize DVC** (already done):
+   ```cmd
+   dvc init
+   ```
+3. **Set up local remote storage** (already done):
+   ```cmd
+   dvc remote add -d localstorage dvc_storage
+   ```
+4. **Add your data** (already done for MachineLearningRating_v3.txt):
+   ```cmd
+   dvc add data/raw/MachineLearningRating_v3.txt
+   ```
+5. **Commit DVC files and push data to remote**:
+   ```cmd
+   git add data/raw/MachineLearningRating_v3.txt.dvc .gitignore
+   git commit -m "Track data with DVC"
+   dvc push
+   ```
+
 ## Usage Guidelines
 
 - Use the Jupyter notebook in `notebooks/exploratory_data_analysis.ipynb` for EDA.
 - Utilize the functions in `src/eda.py` for specific analysis tasks.
 - Use `src/utils.py` for data loading and cleaning tasks.
+
+## EDA Steps
+- Data summarization: descriptive statistics, dtype review, missing value checks.
+- Univariate analysis: histograms/bar charts for key variables.
+- Bivariate/multivariate analysis: scatter plots, correlation matrix, box plots for outlier detection.
+- At least 3 creative and beautiful plots with clear insights.
+
+## References
+- [DVC Documentation](https://dvc.org/doc)
+- [Pandas Documentation](https://pandas.pydata.org/docs/)
+- [Seaborn Documentation](https://seaborn.pydata.org/)
 
 ## Contributing
 
