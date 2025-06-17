@@ -102,3 +102,37 @@ def plot_loss_ratio_by_group(data, group_col):
     plt.ylabel('Average Loss Ratio')
     plt.xticks(rotation=45)
     plt.show()
+
+import numpy as np
+from scipy import stats
+
+def claim_frequency(data, group_col=None):
+    if group_col:
+        return data.groupby(group_col)['TotalClaims'].apply(lambda x: (x > 0).mean())
+    return (data['TotalClaims'] > 0).mean()
+
+def claim_severity(data, group_col=None):
+    if group_col:
+        return data[data['TotalClaims'] > 0].groupby(group_col)['TotalClaims'].mean()
+    return data[data['TotalClaims'] > 0]['TotalClaims'].mean()
+
+def margin(data, group_col=None):
+    if group_col:
+        return data.groupby(group_col).apply(lambda x: (x['TotalPremium'] - x['TotalClaims']).mean())
+    return (data['TotalPremium'] - data['TotalClaims']).mean()
+
+def t_test_groups(data, group_col, metric_col, group_a, group_b):
+    group_a_data = data[data[group_col] == group_a][metric_col]
+    group_b_data = data[data[group_col] == group_b][metric_col]
+    t_stat, p_val = stats.ttest_ind(group_a_data, group_b_data, nan_policy='omit')
+    return t_stat, p_val
+
+def chi2_test_groups(data, group_col, outcome_col, group_a, group_b):
+    contingency = np.array([
+        [(data[(data[group_col]==group_a) & (data[outcome_col]>0)].shape[0]),
+         (data[(data[group_col]==group_a) & (data[outcome_col]==0)].shape[0])],
+        [(data[(data[group_col]==group_b) & (data[outcome_col]>0)].shape[0]),
+         (data[(data[group_col]==group_b) & (data[outcome_col]==0)].shape[0])]
+    ])
+    chi2, p, dof, expected = stats.chi2_contingency(contingency)
+    return chi2, p
