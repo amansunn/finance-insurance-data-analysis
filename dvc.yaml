@@ -1,8 +1,0 @@
-stages:
-  load_data:
-    cmd: python src/utils.py load_data
-    deps:
-    - data/raw/dataset.csv
-    outs:
-    - data/processed/cleaned_dataset.csv
-
