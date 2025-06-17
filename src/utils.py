@@ -1,7 +1,17 @@
 def load_data(file_path):
     import pandas as pd
     """Load data from a CSV file."""
-    return pd.read_csv(file_path)
+
+    try:
+        if file_path.endswith('.txt'):
+            data = pd.read_table(file_path, sep='|')  # Specify pipe delimiter for .txt files
+        else:
+            data = pd.read_csv(file_path)
+        print(f"Data loaded successfully with {data.shape[0]} rows and {data.shape[1]} columns.")
+        return data
+    except Exception as e:
+        print(f"Error loading data: {e}")
+        return None
 
 def clean_data(df):
     """Clean the DataFrame by handling missing values and duplicates."""

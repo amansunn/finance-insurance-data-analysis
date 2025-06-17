@@ -3,7 +3,7 @@ def load_data(file_path):
     return pd.read_csv(file_path)
 
 def calculate_loss_ratio(data):
-    data['loss_ratio'] = data['losses'] / data['premiums']
+    data['loss_ratio'] = data['TotalClaims'] / data['TotalPremium']
     return data
 
 def summarize_data(data):
@@ -59,7 +59,7 @@ def plot_scatter(data, x, y, hue=None):
     import seaborn as sns
     import matplotlib.pyplot as plt
     plt.figure(figsize=(10, 6))
-    if hue:
+    if hue and hue in data.columns:
         sns.scatterplot(data=data, x=x, y=y, hue=hue)
     else:
         sns.scatterplot(data=data, x=x, y=y)
