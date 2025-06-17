@@ -1,3 +1,16 @@
 myenv/
 dvc_storage/
 bfg-1.14.0.jar
+myenv/
+dvc_storage/
+*.csv
+*.txt
+*.tsv
+*.parquet
+*.xlsx
+*.zip
+*.tar
+*.tar.gz
+*.h5
+*.pkl
+*.pickle
