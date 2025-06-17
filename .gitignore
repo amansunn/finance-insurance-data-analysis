@@ -1,5 +1,6 @@
 myenv/
 dvc_storage/
+.dvc/cache/
 bfg-1.14.0.jar
 myenv/
 dvc_storage/
